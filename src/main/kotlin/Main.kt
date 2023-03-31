@@ -28,7 +28,7 @@ fun main(args: Array<String>) {
                 ctx.status(HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
-        .start("127.0.0.1", 8080)
+        .start(8080)
 }
 
 private fun handleComment(currentComment: Comment, parentComment: Comment?) {
