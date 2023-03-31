@@ -1,9 +1,9 @@
 package info.skyblond.typecho.mate
 
 import io.javalin.http.Context
-import java.sql.Timestamp
 import java.time.Instant
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 data class Comment(
@@ -25,8 +25,10 @@ data class Comment(
 
     val time: String = DateTimeFormatter.ofPattern(Config.dataTimeFormat)
         .format(
-            Timestamp.from(Instant.ofEpochSecond(this.commentCreatedTimestamp))
-                .toLocalDateTime().atZone(ZoneId.of(Config.timezone))
+            ZonedDateTime.ofInstant(
+                Instant.ofEpochSecond(this.commentCreatedTimestamp),
+                ZoneId.of(Config.timezone)
+            )
         )
 
 

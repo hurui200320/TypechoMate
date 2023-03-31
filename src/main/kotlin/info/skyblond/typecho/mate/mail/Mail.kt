@@ -56,6 +56,14 @@ fun sendEmail(comment: Comment, parent: Comment?) {
     }
     // then if we have a parent comment, then notify the parent comment author
     parent?.let {
+        if (comment.commentAuthorMail == it.commentAuthorMail) {
+            logger.info { "Skip comment id ${comment.commentId} because of same author" }
+            return@let
+        }
+        if (it.commentAuthorMail == Config.ownerMailAddress) {
+            logger.info { "Skip comment id ${comment.commentId} because the author-to-reply is owner" }
+            return@let
+        }
         logger.info { "Sending mail to parent author. Comment id: ${comment.commentId}" }
         try {
             sendOneEmail(

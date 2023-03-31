@@ -9,7 +9,7 @@ object Config {
         private set
 
     @Volatile
-    var timezone: String = "Asia/Shanghai"
+    var timezone: String = "UTC+8"
         private set
 
 
