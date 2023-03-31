@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 private val logger = KotlinLogging.logger("Application")
 
 fun main(args: Array<String>) {
-    require(args.size == 1) {"Usage: TypechoMate <path_to_config_file>"}
+    require(args.size == 1) { "Usage: TypechoMate <path_to_config_file>" }
     Config.load(File(args[0]))
     Javalin.create()
         .post("/comment") { ctx ->
@@ -32,6 +32,10 @@ fun main(args: Array<String>) {
 }
 
 private fun handleComment(currentComment: Comment, parentComment: Comment?) {
+    if (currentComment.commentId == 0) {
+        logger.info { "Skipping comment id 0" }
+        return
+    }
     CompletableFuture.runAsync { sendEmail(currentComment, parentComment) }
     CompletableFuture.runAsync { noticeIFTTT(currentComment) }
     CompletableFuture.runAsync { noticePushover(currentComment) }
