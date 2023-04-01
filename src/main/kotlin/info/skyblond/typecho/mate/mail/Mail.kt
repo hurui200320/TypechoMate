@@ -18,6 +18,7 @@ private fun sendOneEmail(
     val prop = Properties()
     prop["mail.smtp.auth"] = true
     prop["mail.smtp.ssl.enable"] = "true"
+    prop["mail.mime.allowutf8"] = "true"
     prop["mail.smtp.host"] = Config.smtpServer
     prop["mail.smtp.port"] = Config.smtpSSLPort.toString()
     prop["mail.smtp.ssl.trust"] = Config.smtpServer
