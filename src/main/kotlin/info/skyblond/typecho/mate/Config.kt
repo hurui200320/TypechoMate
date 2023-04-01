@@ -5,7 +5,7 @@ import java.util.*
 
 object Config {
     @Volatile
-    var dataTimeFormat: String = "yyyy-MM-dd HH:mm:ss"
+    var dataTimeFormat: String = "yyyy-MM-dd HH:mm:ss z"
         private set
 
     @Volatile
