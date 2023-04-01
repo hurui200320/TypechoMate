@@ -62,7 +62,7 @@ object Config {
     fun load(file: File) {
         val p = Properties()
         if (file.exists()) {
-            file.inputStream().use { p.load(it) }
+            file.reader().use { p.load(it) }
             p.getProperty("dataTimeFormat")?.let { dataTimeFormat = it }
             p.getProperty("timezone")?.let { timezone = it }
             p.getProperty("smtpSSLPort")?.toIntOrNull()?.let { smtpSSLPort = it }

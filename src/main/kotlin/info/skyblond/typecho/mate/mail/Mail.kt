@@ -2,6 +2,7 @@ package info.skyblond.typecho.mate.mail
 
 import info.skyblond.typecho.mate.Comment
 import info.skyblond.typecho.mate.Config
+import info.skyblond.typecho.mate.encodeForMail
 import jakarta.mail.*
 import jakarta.mail.internet.InternetAddress
 import jakarta.mail.internet.MimeBodyPart
@@ -18,7 +19,6 @@ private fun sendOneEmail(
     val prop = Properties()
     prop["mail.smtp.auth"] = true
     prop["mail.smtp.ssl.enable"] = "true"
-    prop["mail.mime.allowutf8"] = "true"
     prop["mail.smtp.host"] = Config.smtpServer
     prop["mail.smtp.port"] = Config.smtpSSLPort.toString()
     prop["mail.smtp.ssl.trust"] = Config.smtpServer
@@ -29,8 +29,8 @@ private fun sendOneEmail(
     })
 
     val message: Message = MimeMessage(session)
-    message.setFrom(InternetAddress(Config.smtpFromAddress, Config.smtpFromNickname))
-    message.setRecipient(Message.RecipientType.TO, InternetAddress(toAddress, toNickname))
+    message.setFrom(InternetAddress(Config.smtpFromAddress, Config.smtpFromNickname.encodeForMail()))
+    message.setRecipient(Message.RecipientType.TO, InternetAddress(toAddress, toNickname.encodeForMail()))
 
     message.subject = subject
     val mimeBodyPart = MimeBodyPart()
