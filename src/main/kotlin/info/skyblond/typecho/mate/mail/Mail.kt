@@ -13,7 +13,7 @@ import java.util.*
 private val logger = KotlinLogging.logger("Email")
 
 private fun sendOneEmail(
-    toAddress: String, subject: String, content: String
+    toAddress: String, toNickname: String, subject: String, content: String
 ) {
     val prop = Properties()
     prop["mail.smtp.auth"] = true
@@ -28,8 +28,8 @@ private fun sendOneEmail(
     })
 
     val message: Message = MimeMessage(session)
-    message.setFrom(InternetAddress(Config.smtpFromAddress))
-    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toAddress))
+    message.setFrom(InternetAddress(Config.smtpFromAddress, Config.smtpFromNickname))
+    message.setRecipient(Message.RecipientType.TO, InternetAddress(toAddress, toNickname))
 
     message.subject = subject
     val mimeBodyPart = MimeBodyPart()
@@ -47,7 +47,7 @@ fun sendEmail(comment: Comment, parent: Comment?) {
     logger.info { "Sending mail to owner. Comment id: ${comment.commentId}" }
     try {
         sendOneEmail(
-            Config.ownerMailAddress,
+            Config.ownerMailAddress, "Blog owner",
             "[${comment.contentTitle}] 一文有新的评论",
             generateOwner(comment)
         )
@@ -56,6 +56,7 @@ fun sendEmail(comment: Comment, parent: Comment?) {
     }
     // then if we have a parent comment, then notify the parent comment author
     parent?.let {
+        logger.info { "Sending mail to parent author. Comment id: ${comment.commentId}" }
         if (comment.commentAuthorMail == it.commentAuthorMail) {
             logger.info { "Skip comment id ${comment.commentId} because of same author" }
             return@let
@@ -64,10 +65,9 @@ fun sendEmail(comment: Comment, parent: Comment?) {
             logger.info { "Skip comment id ${comment.commentId} because the author-to-reply is owner" }
             return@let
         }
-        logger.info { "Sending mail to parent author. Comment id: ${comment.commentId}" }
         try {
             sendOneEmail(
-                it.commentAuthorMail,
+                it.commentAuthorMail, it.commentAuthor,
                 "您在 [${comment.contentTitle}] 的评论有了回复",
                 generateGuest(comment, it)
             )

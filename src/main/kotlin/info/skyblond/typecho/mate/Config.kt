@@ -34,6 +34,10 @@ object Config {
         private set
 
     @Volatile
+    var smtpFromNickname: String = "your-blog-name"
+        private set
+
+    @Volatile
     var ownerMailAddress: String = "something@example.info"
         private set
 
@@ -59,18 +63,19 @@ object Config {
         val p = Properties()
         if (file.exists()) {
             file.inputStream().use { p.load(it) }
-            dataTimeFormat = p.getProperty("dataTimeFormat")
-            timezone = p.getProperty("timezone")
-            smtpSSLPort = p.getProperty("smtpSSLPort").toInt()
-            smtpServer = p.getProperty("smtpServer")
-            smtpUsername = p.getProperty("smtpUsername")
-            smtpPassword = p.getProperty("smtpPassword")
-            smtpFromAddress = p.getProperty("smtpFromAddress")
-            ownerMailAddress = p.getProperty("ownerMailAddress")
-            iftttEventName = p.getProperty("iftttEventName")
-            iftttApiKey = p.getProperty("iftttApiKey")
-            pushoverUserKey = p.getProperty("pushoverUserKey")
-            pushoverApiToken = p.getProperty("pushoverApiToken")
+            p.getProperty("dataTimeFormat")?.let { dataTimeFormat = it }
+            p.getProperty("timezone")?.let { timezone = it }
+            p.getProperty("smtpSSLPort")?.toIntOrNull()?.let { smtpSSLPort = it }
+            p.getProperty("smtpServer")?.let { smtpServer = it }
+            p.getProperty("smtpUsername")?.let { smtpUsername = it }
+            p.getProperty("smtpPassword")?.let { smtpPassword = it }
+            p.getProperty("smtpFromAddress")?.let { smtpFromAddress = it }
+            p.getProperty("smtpFromNickname")?.let { smtpFromNickname = it }
+            p.getProperty("ownerMailAddress")?.let { ownerMailAddress = it }
+            p.getProperty("iftttEventName")?.let { iftttEventName = it }
+            p.getProperty("iftttApiKey")?.let { iftttApiKey = it }
+            p.getProperty("pushoverUserKey")?.let { pushoverUserKey = it }
+            p.getProperty("pushoverApiToken")?.let { pushoverApiToken = it }
         } else {
             p.setProperty("dataTimeFormat", dataTimeFormat)
             p.setProperty("timezone", timezone)
@@ -79,6 +84,7 @@ object Config {
             p.setProperty("smtpUsername", smtpUsername)
             p.setProperty("smtpPassword", smtpPassword)
             p.setProperty("smtpFromAddress", smtpFromAddress)
+            p.setProperty("smtpFromNickname", smtpFromNickname)
             p.setProperty("ownerMailAddress", ownerMailAddress)
             p.setProperty("iftttEventName", iftttEventName)
             p.setProperty("iftttApiKey", iftttApiKey)
