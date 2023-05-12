@@ -1,10 +1,10 @@
 plugins {
-    kotlin("jvm") version "1.8.10"
+    kotlin("jvm") version "1.8.20"
     application
 }
 
 group = "info.skyblond"
-version = "1.1.0"
+version = "1.1.1"
 
 repositories {
     mavenCentral()
