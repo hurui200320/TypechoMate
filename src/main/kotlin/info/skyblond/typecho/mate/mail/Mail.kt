@@ -31,6 +31,7 @@ private fun sendOneEmail(
     val message: Message = MimeMessage(session)
     message.setFrom(InternetAddress(Config.smtpFromAddress, Config.smtpFromNickname.encodeForMail()))
     message.setRecipient(Message.RecipientType.TO, InternetAddress(toAddress, toNickname.encodeForMail()))
+    message.addHeader("X-Mailer", "TypechoMate")
 
     message.subject = subject
     val mimeBodyPart = MimeBodyPart()

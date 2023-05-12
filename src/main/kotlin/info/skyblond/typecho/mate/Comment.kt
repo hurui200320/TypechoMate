@@ -46,23 +46,20 @@ data class Comment(
         private const val COMMENT_PERMALINK = "permalink"
         private const val COMMENT_STATUS = "status"
         private const val COMMENT_PARENT_ID = "parent"
-        fun Context.extractComment(prefix: String): Comment {
-            val params = this.formParamMap()
-            return Comment(
-                commentId = this.formParam(prefix + COMMENT_ID)?.toIntOrNull() ?: 0,
-                commentCreatedTimestamp = this.formParam(prefix + COMMENT_CREATED_TIMESTAMP)?.toLongOrNull() ?: 0,
-                commentAuthor = this.formParam(prefix + COMMENT_AUTHOR) ?: "",
-                commentAuthorId = this.formParam(prefix + COMMENT_AUTHOR_ID)?.toIntOrNull() ?: 0,
-                commentAuthorMail = this.formParam(prefix + COMMENT_AUTHOR_MAIL) ?: "",
-                commentAuthorIP = this.formParam(prefix + COMMENT_AUTHOR_IP) ?: "",
-                commentText = this.formParam(prefix + COMMENT_TEXT) ?: "",
-                commentPermalink = this.formParam(prefix + COMMENT_PERMALINK) ?: "",
-                commentStatus = this.formParam(prefix + COMMENT_STATUS) ?: "",
-                commentParentId = this.formParam(prefix + COMMENT_PARENT_ID)?.toIntOrNull() ?: 0,
-                contentId = this.formParam(prefix + CONTENT_ID)?.toIntOrNull() ?: 0,
-                contentOwnerId = this.formParam(prefix + CONTENT_OWNER_ID)?.toIntOrNull() ?: 0,
-                contentTitle = this.formParam(prefix + CONTENT_TITLE) ?: ""
-            )
-        }
+        fun Context.extractComment(prefix: String): Comment = Comment(
+            commentId = this.formParam(prefix + COMMENT_ID)?.toIntOrNull() ?: 0,
+            commentCreatedTimestamp = this.formParam(prefix + COMMENT_CREATED_TIMESTAMP)?.toLongOrNull() ?: 0,
+            commentAuthor = this.formParam(prefix + COMMENT_AUTHOR) ?: "",
+            commentAuthorId = this.formParam(prefix + COMMENT_AUTHOR_ID)?.toIntOrNull() ?: 0,
+            commentAuthorMail = this.formParam(prefix + COMMENT_AUTHOR_MAIL) ?: "",
+            commentAuthorIP = this.formParam(prefix + COMMENT_AUTHOR_IP) ?: "",
+            commentText = this.formParam(prefix + COMMENT_TEXT) ?: "",
+            commentPermalink = this.formParam(prefix + COMMENT_PERMALINK) ?: "",
+            commentStatus = this.formParam(prefix + COMMENT_STATUS) ?: "",
+            commentParentId = this.formParam(prefix + COMMENT_PARENT_ID)?.toIntOrNull() ?: 0,
+            contentId = this.formParam(prefix + CONTENT_ID)?.toIntOrNull() ?: 0,
+            contentOwnerId = this.formParam(prefix + CONTENT_OWNER_ID)?.toIntOrNull() ?: 0,
+            contentTitle = this.formParam(prefix + CONTENT_TITLE) ?: ""
+        )
     }
 }
