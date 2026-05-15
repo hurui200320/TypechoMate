@@ -15,9 +15,9 @@ fun noticeTelegram(comment: Comment) {
         val messageText = """
             |有人在您的博客发表了评论
             |
-            |${comment.commentAuthor.escapeMarkdownV2()} 在《${comment.contentTitle.escapeMarkdownV2()}》下说到：
+            |${comment.commentAuthor.escapeMarkdownV2()} 在《${comment.contentTitle.escapeMarkdownV2()}》下评论：
             |
-            |${comment.commentText.cutoff(3500).escapeMarkdownV2().lines().joinToString("\n> ")}
+            |>${comment.commentText.cutoff(3500).escapeMarkdownV2().lines().joinToString("\n>")}
             |
             |状态： ${comment.commentStatus.escapeMarkdownV2()}
             |评论IP： ${comment.commentAuthorIP.escapeMarkdownV2()}

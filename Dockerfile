@@ -1,7 +1,7 @@
 FROM gradle:9.5.0-jdk25 AS build
 WORKDIR /home/gradle/project
 COPY ./ /home/gradle/project/
-RUN gradle installDist
+RUN gradle installDist --no-daemon
 
 
 
