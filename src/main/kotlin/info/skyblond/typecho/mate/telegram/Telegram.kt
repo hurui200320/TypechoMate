@@ -17,11 +17,12 @@ fun noticeTelegram(comment: Comment) {
             |
             |${comment.commentAuthor.escapeMarkdownV2()} 在《${comment.contentTitle.escapeMarkdownV2()}》下说到：
             |
-            |${comment.commentText.cutoff(3500).escapeMarkdownV2()}
+            |${comment.commentText.cutoff(3500).escapeMarkdownV2().lines().joinToString("\n> ")}
             |
-            |状态：${comment.commentStatus.escapeMarkdownV2()}
-            |评论IP：${comment.commentAuthorIP.escapeMarkdownV2()}
-            |评论Email：${comment.commentAuthorMail.escapeMarkdownV2()}
+            |状态： ${comment.commentStatus.escapeMarkdownV2()}
+            |评论IP： ${comment.commentAuthorIP.escapeMarkdownV2()}
+            |评论Email： ${comment.commentAuthorMail.escapeMarkdownV2()}
+            |
             |[查看评论](${comment.commentPermalink.escapeMarkdownV2()})
         """.trimMargin()
 
