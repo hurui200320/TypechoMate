@@ -1,10 +1,10 @@
 plugins {
-    kotlin("jvm") version "1.8.20"
+    kotlin("jvm") version "2.3.20"
     application
 }
 
 group = "info.skyblond"
-version = "1.1.1"
+version = "1.1.2"
 
 repositories {
     mavenCentral()
@@ -12,15 +12,14 @@ repositories {
 
 dependencies {
     // send email
-    implementation("org.eclipse.angus:angus-mail:2.0.1")
+    implementation("org.eclipse.angus:angus-mail:2.0.5")
     // do http post
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.squareup.okhttp3:okhttp:5.3.2")
     // http server
-    implementation("io.javalin:javalin:5.4.2")
+    implementation("io.javalin:javalin:7.2.0")
     // logger
-    implementation("ch.qos.logback:logback-classic:1.4.6")
-    implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
-
+    implementation("ch.qos.logback:logback-classic:1.5.32")
+    implementation("io.github.oshai:kotlin-logging-jvm:8.0.02")
 
     testImplementation(kotlin("test"))
 }
@@ -30,7 +29,7 @@ tasks.test {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(25)
 }
 
 application {

@@ -4,9 +4,9 @@ import info.skyblond.typecho.mate.Config
 import info.skyblond.typecho.mate.ifttt.noticeIFTTT
 import info.skyblond.typecho.mate.mail.sendEmail
 import info.skyblond.typecho.mate.pushover.noticePushover
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.javalin.Javalin
 import io.javalin.http.HttpStatus
-import mu.KotlinLogging
 import java.io.File
 import java.util.concurrent.CompletableFuture
 
@@ -15,8 +15,13 @@ private val logger = KotlinLogging.logger("Application")
 fun main(args: Array<String>) {
     require(args.size == 1) { "Usage: TypechoMate <path_to_config_file>" }
     Config.load(File(args[0]))
-    Javalin.create()
-        .post("/comment") { ctx ->
+    Javalin.create { config ->
+        config.routes.post("/comment") { ctx ->
+            logger.info {
+                "Handling /comment, form body: \n\t" + ctx.formParamMap().map { (k, vs) ->
+                    "$k=[${vs.joinToString(", ")}]"
+                }.joinToString("\n\t")
+            }
             try {
                 val currentComment = ctx.extractComment("current_")
                 val parentComment = if (currentComment.hasParent) ctx.extractComment("parent_") else null
@@ -28,7 +33,7 @@ fun main(args: Array<String>) {
                 ctx.status(HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
-        .start(8080)
+    }.start(8080)
 }
 
 private fun handleComment(currentComment: Comment, parentComment: Comment?) {

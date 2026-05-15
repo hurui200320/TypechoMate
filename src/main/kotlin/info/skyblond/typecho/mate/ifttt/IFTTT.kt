@@ -4,7 +4,7 @@ import info.skyblond.typecho.mate.Comment
 import info.skyblond.typecho.mate.Config
 import info.skyblond.typecho.mate.PostUtils
 import info.skyblond.typecho.mate.cutoff
-import mu.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 
 private val logger = KotlinLogging.logger("IFTTT")
 fun noticeIFTTT(comment: Comment) {

@@ -3,12 +3,12 @@ package info.skyblond.typecho.mate.mail
 import info.skyblond.typecho.mate.Comment
 import info.skyblond.typecho.mate.Config
 import info.skyblond.typecho.mate.encodeForMail
+import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.mail.*
 import jakarta.mail.internet.InternetAddress
 import jakarta.mail.internet.MimeBodyPart
 import jakarta.mail.internet.MimeMessage
 import jakarta.mail.internet.MimeMultipart
-import mu.KotlinLogging
 import java.util.*
 
 private val logger = KotlinLogging.logger("Email")
@@ -59,12 +59,16 @@ fun sendEmail(comment: Comment, parent: Comment?) {
     // then if we have a parent comment, then notify the parent comment author
     parent?.let {
         logger.info { "Sending mail to parent author. Comment id: ${comment.commentId}" }
+        if (comment.commentAuthorMail.isBlank()) {
+            logger.info { "Skip notify parent for comment ${comment.commentId} because of blank author mail" }
+            return@let
+        }
         if (comment.commentAuthorMail == it.commentAuthorMail) {
-            logger.info { "Skip comment id ${comment.commentId} because of same author" }
+            logger.info { "Skip notify parent for comment ${comment.commentId} because of same author" }
             return@let
         }
         if (it.commentAuthorMail == Config.ownerMailAddress) {
-            logger.info { "Skip comment id ${comment.commentId} because the author-to-reply is owner" }
+            logger.info { "Skip notify parent for comment ${comment.commentId} because the author-to-reply is owner" }
             return@let
         }
         try {
