@@ -33,7 +33,7 @@ fun main(args: Array<String>) {
                 ctx.status(HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
-    }.start(8080)
+    }.start("0.0.0.0", 8080)
 }
 
 private fun handleComment(currentComment: Comment, parentComment: Comment?) {
