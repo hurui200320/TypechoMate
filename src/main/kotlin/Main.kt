@@ -1,7 +1,7 @@
 import info.skyblond.typecho.mate.Comment
 import info.skyblond.typecho.mate.Comment.Companion.extractComment
 import info.skyblond.typecho.mate.Config
-import info.skyblond.typecho.mate.ifttt.noticeIFTTT
+import info.skyblond.typecho.mate.telegram.noticeTelegram
 import info.skyblond.typecho.mate.mail.sendEmail
 import info.skyblond.typecho.mate.pushover.noticePushover
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -42,6 +42,6 @@ private fun handleComment(currentComment: Comment, parentComment: Comment?) {
         return
     }
     CompletableFuture.runAsync { sendEmail(currentComment, parentComment) }
-    CompletableFuture.runAsync { noticeIFTTT(currentComment) }
+    CompletableFuture.runAsync { noticeTelegram(currentComment) }
     CompletableFuture.runAsync { noticePushover(currentComment) }
 }

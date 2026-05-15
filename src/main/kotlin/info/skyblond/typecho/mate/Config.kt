@@ -43,11 +43,11 @@ object Config {
 
 
     @Volatile
-    var iftttEventName: String = "your-event-name"
+    var telegramBotToken: String = "123456789:ABCDEF..."
         private set
 
     @Volatile
-    var iftttApiKey: String = "your-api-key"
+    var telegramUserIds: List<String> = listOf("123456789")
         private set
 
 
@@ -72,8 +72,8 @@ object Config {
             p.getProperty("smtpFromAddress")?.let { smtpFromAddress = it }
             p.getProperty("smtpFromNickname")?.let { smtpFromNickname = it }
             p.getProperty("ownerMailAddress")?.let { ownerMailAddress = it }
-            p.getProperty("iftttEventName")?.let { iftttEventName = it }
-            p.getProperty("iftttApiKey")?.let { iftttApiKey = it }
+            p.getProperty("telegramBotToken")?.let { telegramBotToken = it }
+            p.getProperty("telegramUserIds")?.let { telegramUserIds = it.split(",").map { s -> s.trim() } }
             p.getProperty("pushoverUserKey")?.let { pushoverUserKey = it }
             p.getProperty("pushoverApiToken")?.let { pushoverApiToken = it }
         } else {
@@ -86,8 +86,8 @@ object Config {
             p.setProperty("smtpFromAddress", smtpFromAddress)
             p.setProperty("smtpFromNickname", smtpFromNickname)
             p.setProperty("ownerMailAddress", ownerMailAddress)
-            p.setProperty("iftttEventName", iftttEventName)
-            p.setProperty("iftttApiKey", iftttApiKey)
+            p.setProperty("telegramBotToken", telegramBotToken)
+            p.setProperty("telegramUserIds", telegramUserIds.joinToString(","))
             p.setProperty("pushoverUserKey", pushoverUserKey)
             p.setProperty("pushoverApiToken", pushoverApiToken)
             file.writer().use { p.store(it, "TypechoMate config") }
